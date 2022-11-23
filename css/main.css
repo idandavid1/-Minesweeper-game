@@ -1,3 +1,6 @@
+/* table{
+
+} */
 body{
     text-align: center;
 }
@@ -28,4 +31,18 @@ button{
     font-size: large;
     border-radius: 10px;
     margin-bottom: 20px;
+}
+
+img{
+    width: 50px;
+    height: 50px;
+}
+
+.lives-left{
+    color: red;
+}
+
+.undo{
+    background-color: orange;
+    margin-top: 20px;
 }

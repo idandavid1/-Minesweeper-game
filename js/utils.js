@@ -1,17 +1,5 @@
 'use strict'
 
-function createMat(ROWS, COLS) {
-    const mat = []
-    for (var i = 0; i < ROWS; i++) {
-        const row = []
-        for (var j = 0; j < COLS; j++) {
-            row.push('')
-        }
-        mat.push(row)
-    }
-    return mat
-}
-
 function resetNums() {
     gNums = []
     for (var i = 0; i < gNumsRange; i++) {
@@ -48,13 +36,6 @@ function getAllEmptyCell(board){
 function getClassName(location) {
     const cellClass = 'cell-' + location.i + '-' + location.j
     return cellClass
-}
-
-function renderCell(location, value) {
-    const cellSelector = '.' + getClassName(location) // cell-i-j
-    const elCell = document.querySelector(cellSelector)
-    elCell.innerHTML = value
-    
 }
 
 function drawCell(cells) {
