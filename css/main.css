@@ -1,0 +1,23 @@
+/* table{
+
+} */
+body{
+    text-align: center;
+}
+
+td{
+    width: 30px;
+    height: 30px;
+}
+
+.hide-board-cell{
+    background-color: darkgray;
+}
+
+.show-board-cell{
+    background-color: rgb(226, 224, 220);
+}
+
+table{
+    margin: auto;
+}
