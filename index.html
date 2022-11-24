@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,8 +8,9 @@
     <link rel="stylesheet" href="css/main.css">
     <title>Mine Sweeper</title>
 </head>
+
 <body onload="initGame()">
-    <h1>Mine Sweeper</h1> 
+    <h1>Mine Sweeper</h1>
     <div class="level">
         <button onclick="levelEasy()">Easy</button>
         <button onclick="levelMedium()">Medium</button>
@@ -22,16 +24,18 @@
     </div>
     <div class="hints-div">
         <h2>hints: <span class="hints">
-            <img onclick="hints()" src="img/lampOff.png">
-            <img onclick="hints()" src="img/lampOff.png">
-            <img onclick="hints()" src="img/lampOff.png">
-        </span></h2>
+                <img onclick="hints()" src="img/lampOff.png">
+                <img onclick="hints()" src="img/lampOff.png">
+                <img onclick="hints()" src="img/lampOff.png">
+            </span></h2>
     </div>
     <div class="lives-div">
         <h2>Lives left: <span class="lives-left">♥️♥️♥️</span></h2>
     </div>
-    <div class="smiley" onclick="initGame()"><img src="img/game.png"></div>
-    <div class="board-game"></div>
+    <div>
+        <div class="smiley" onclick="initGame()"><img src="img/game.png"></div>
+        <div class="board-game"></div>
+    </div>
     <button class="undo" onclick="undo()">UNDO</button>
     <button class="Mega-Hint" onclick="MegaHint()">Mega-Hint</button>
     <button class="Safe-Click" onclick="SafeClick()">Safe-Click</button>
@@ -44,4 +48,5 @@
     <script src="js/bonus.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>

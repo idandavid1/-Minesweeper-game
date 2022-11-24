@@ -48,7 +48,20 @@ function undo(){
     if(!gUndoArr.length) return 
     var board = gUndoArr.pop()
     gBoard = board
+    initShowAndMarkCounter()
     renderBoard(board)
+}
+
+function initShowAndMarkCounter(){
+    gGame.shownCount = 0
+    gGame.markedCount = 0
+    for (var i = 0; i < gLevel.SIZE; i++) {
+        for (var j = 0; j < gLevel.SIZE; j++) {
+            const cell = gBoard[i][j]
+            if(cell.isShown) gGame.shownCount++
+            else if(cell.isMarked) gGame.markedCount++
+        }
+    }
 }
 
 function createCopyBoard(board){
@@ -230,6 +243,7 @@ function DarkMode(elButton){
         elBody.classList.remove('Dark-Mode')
     }
 }
+
 
 // function initMegaHintVariable(location){
 //     if(!gMegaHintVariableOne) gMegaHintVariableOne = location

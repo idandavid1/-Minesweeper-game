@@ -10,7 +10,12 @@ td {
     width: 30px;
     height: 30px;
     font-size: large;
+    
 }
+
+/* board-game:active {
+    background-color: blue;
+} */
 
 .hide-board-cell {
     background-color: darkgray;
@@ -93,9 +98,11 @@ h2 {
 
 .Dark-Mode-buttom {
     background-color: gold;
+
 }
 
 .Dark-Mode {
     background-color: black;
     color: aliceblue;
 }
+
