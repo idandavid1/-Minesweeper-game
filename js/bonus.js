@@ -36,6 +36,7 @@ function initBonus(){
     gManuallyCreateCounter = 0
     gLevel.MINES = initMinesNumber()
     document.querySelector('.Safe-Click-div span').innerText = gSafeClickCounter
+    document.querySelector('.hints').innerHTML = gImgLampOff.repeat(gHintsCounter)
 }
 
 function initMinesNumber(){

@@ -3,7 +3,7 @@
 } */
 body {
     text-align: center;
-    background-color: aqua;
+    background-color:dodgerblue;
 }
 
 td {
@@ -48,6 +48,7 @@ img {
 
 .smiley {
     margin-top: 40px;
+    
 }
 
 .lives-left {
