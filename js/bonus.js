@@ -38,7 +38,7 @@ function initBonus(){
 }
 
 function undo(){
-    if(!gUndoArr.length) return
+    if(!gUndoArr.length) return 
     var board = gUndoArr.pop()
     gBoard = board
     renderBoard(board)
@@ -106,6 +106,7 @@ function SevenBoom(){
     renderBoard(gBoard)
     gIsSevenBoom = true
     isNeedFirstClick = false
+    gGame.isOn = true
 }
 
 function putMinesInSevenBoomOrder(board){
