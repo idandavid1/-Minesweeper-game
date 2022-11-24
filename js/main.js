@@ -1,6 +1,6 @@
 'use script'
 
-const BOMB = '💣'
+const MINES = '💣'
 const EMPTY = ''
 const FLAG = '🚩'
 const gImgWin = '<img src="img/win.png"></img>'
@@ -128,7 +128,7 @@ function renderBoard(board){
             var className = getClassName({i, j})
             var str
             if(cell.isShown){
-                if(cell.isMine) str = BOMB
+                if(cell.isMine) str = MINES
                 else str = colourfulMinesAroundCount(+cell.minesAroundCount)
                 className += ' show-board-cell'
             } else {
@@ -183,7 +183,7 @@ function firstCellClicked(i, j){
     const cell = gBoard[i][j]
     gGame.shownCount++
     cell.isShown = true
-    putRandomBomb()
+    putRandomMines()
     setMinesNegsCount(gBoard)
     renderBoard(gBoard)
     gUndoArr.push(createCopyBoard(gBoard))
@@ -194,7 +194,7 @@ function firstCellClicked(i, j){
     gTimeInterval = setInterval(displayGameTime, 1000)
 }
 
-function putRandomBomb(){
+function putRandomMines(){
     const cells = []
     for (var i = 0; i < gLevel.SIZE; i++) {
         for (var j = 0; j < gLevel.SIZE; j++) {
@@ -240,7 +240,7 @@ function clickedBomb(elCell){
         const heartStr = '♥️'.repeat(gLives)
         elLivesLeft.innerText = heartStr
         elCell.classList.replace('hide-board-cell', 'show-board-cell')
-        elCell.innerText = BOMB
+        elCell.innerText = MINES
         setTimeout(function(){
             elCell.classList.replace('show-board-cell', 'hide-board-cell')
             elCell.innerText = EMPTY
@@ -250,7 +250,7 @@ function clickedBomb(elCell){
     for (var i = 0; i < gLevel.SIZE; i++) {
         for (var j = 0; j < gLevel.SIZE; j++) {
             const cell = gBoard[i][j]
-            if(cell.isMine) renderCell({i, j}, BOMB)
+            if(cell.isMine) renderCell({i, j}, MINES)
         }
     }
     elLivesLeft.innerText = ''
@@ -283,6 +283,8 @@ function gameOver(){
 }
 
 function checkGameOver(){
+    console.log('gGame.shownCount:', gGame.shownCount)
+    console.log('gLevel.MINES:', gLevel.MINES)
     return gGame.shownCount === (gLevel.SIZE ** 2) - gLevel.MINES && gGame.markedCount === gLevel.MINES
 }
 

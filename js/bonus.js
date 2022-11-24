@@ -75,7 +75,7 @@ function initMegaHintVariable(location){
         for (var i = gMegaHintVariableOne.i; i <= gMegaHintVariableTwo.i; i++) {
             for (var j = gMegaHintVariableOne.j; j <= gMegaHintVariableTwo.j; j++){
                 const cell = gBoard[i][j]
-                const value = cell.isMine ? BOMB : colourfulMinesAroundCount(cell.minesAroundCount)
+                const value = cell.isMine ? MINES : colourfulMinesAroundCount(cell.minesAroundCount)
                 renderCell({i, j}, value)
             }
         }
@@ -184,7 +184,7 @@ function showHint(location){
             for(var j = colIdx - 1; j <= colIdx + 1; j++){
                 if(j < 0 || j >= gBoard[i].length) continue
                 const cell = gBoard[i][j]
-                const value = cell.isMine ? BOMB : colourfulMinesAroundCount(cell.minesAroundCount)
+                const value = cell.isMine ? MINES : colourfulMinesAroundCount(cell.minesAroundCount)
                 renderCell({i, j}, value)
             }
         }
@@ -215,7 +215,7 @@ function manuallyCreate(elButton){
 }
 
 function initManuallyCreate(location){
-    renderCell(location, BOMB)
+    renderCell(location, MINES)
     gBoard[location.i][location.j].isMine = true
     gManuallyCreateCounter++
 }
@@ -223,7 +223,7 @@ function initManuallyCreate(location){
 function DarkMode(elButton){
     const elBody = document.querySelector('body')
     if(elButton.innerText === 'Dark-Mode'){
-        elButton.innerText = 'White-Mode'
+        elButton.innerText = 'Out-Dark-Mode'
         elBody.classList.add('Dark-Mode')
     } else {
         elButton.innerText = 'Dark-Mode'
