@@ -305,7 +305,7 @@ function renderCell(location, value, isShow = true) {
     const elCell = document.querySelector(cellSelector)
     elCell.innerHTML = value
     if(isShow) elCell.classList.replace('hide-board-cell', 'show-board-cell') 
-    else elCell.classList.replace('show-board-cell', 'show-board-cellhide-board-cell')
+    else elCell.classList.replace('show-board-cell', 'hide-board-cell')
 }
 
 function displayGameTime(){ 

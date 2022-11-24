@@ -34,6 +34,7 @@ function initBonus(){
     isHintsClick = false
     isManuallyCreateClick = false
     gManuallyCreateCounter = 0
+    document.querySelector('.Safe-Click-div span').innerText = gSafeClickCounter
 }
 
 function undo(){
@@ -89,16 +90,13 @@ function SafeClick(){
         }
     }
     const cell = drawCell(cells)
-    gBoard[cell.i][cell.j].isShown = true
     const value = colourfulMinesAroundCount(gBoard[cell.i][cell.j].minesAroundCount)
-    renderCell({i: cell.i, j: cell.j}, value)
+    renderCell(cell, value)
     setTimeout(function(){
-        gBoard[cell.i][cell.j].isShown = false
-        const elCell = document.querySelector('.' + getClassName(cell))
-        elCell.innerHTML = EMPTY
-        elCell.classList.replace('show-board-cell', 'hide-board-cell')
+        renderCell(cell, EMPTY, false)
     }, 1000)
     gSafeClickCounter--
+    document.querySelector('.Safe-Click-div span').innerText = gSafeClickCounter
 }
 
 function SevenBoom(){
@@ -132,7 +130,7 @@ function saveLevel(gLevelLocalStorage){
 
 function updateScore(newScore, gLevelLocalStorage){
     const oldScore = localStorage.getItem(gLevelLocalStorage)
-    if(newScore < oldScore || oldScore === -1){
+    if(newScore < oldScore || oldScore === '-1'){
         localStorage.setItem(gLevelLocalStorage, newScore)
     }
 }
@@ -212,4 +210,15 @@ function initManuallyCreate(location){
     renderCell(location, BOMB)
     gBoard[location.i][location.j].isMine = true
     gManuallyCreateCounter++
+}
+
+function DarkMode(elButton){
+    const elBody = document.querySelector('body')
+    if(elButton.innerText === 'Dark-Mode'){
+        elButton.innerText = 'White-Mode'
+        elBody.classList.add('Dark-Mode')
+    } else {
+        elButton.innerText = 'Dark-Mode'
+        elBody.classList.remove('Dark-Mode')
+    }
 }

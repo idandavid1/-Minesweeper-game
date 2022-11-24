@@ -1,29 +1,29 @@
 /* table{
 
 } */
-body{
+body {
     text-align: center;
 }
 
-td{
+td {
     width: 30px;
     height: 30px;
     font-size: large;
 }
 
-.hide-board-cell{
+.hide-board-cell {
     background-color: darkgray;
 }
 
-.show-board-cell{
+.show-board-cell {
     background-color: rgb(226, 224, 220);
 }
 
-table{
+table {
     margin: auto;
 }
 
-button{
+button {
     width: 150px;
     height: 50px;
     margin: auto;
@@ -32,42 +32,69 @@ button{
     border-radius: 10px;
     margin-bottom: 20px;
     margin-top: 20px;
+    cursor: pointer;
 }
 
-img{
+img {
     width: 50px;
     height: 50px;
 }
 
-.lives-left{
+.smiley {
+    margin-top: 40px;
+}
+
+.lives-left {
     color: red;
 }
 
-.undo{
+.undo {
     background-color: orange;
 }
 
-.Mega-Hint{
-    background-color:cornflowerblue
+.Mega-Hint {
+    background-color: cornflowerblue
 }
 
-.Safe-Click{
-    background-color:rgb(8, 59, 154)
+.Safe-Click {
+    background-color: rgb(8, 59, 154);
 }
 
-.Seven-Boom{
-    background-color:rgb(214, 231, 36)
+.Seven-Boom {
+    background-color: rgb(214, 231, 36)
 }
 
-.Exterminator{
+.Exterminator {
     background-color: greenyellow;
 }
 
-.manually-create{
+.manually-create {
     background-color: blueviolet;
 }
 
-.hints img{
+.Safe-Click-div {
+    padding-right: 320px;
+}
+
+.hints img {
     width: 30px;
     height: 30px;
+}
+
+.score-div,
+.time-div,
+.hints-div,
+.lives-div,
+h2 {
+    display: inline;
+    margin-left: 15px;
+}
+
+.Dark-Mode-buttom {
+    background-color: gold;
+}
+
+.Dark-Mode {
+    background-color: black;
+    color: aliceblue;
 }
