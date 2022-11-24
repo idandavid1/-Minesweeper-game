@@ -34,7 +34,14 @@ function initBonus(){
     isHintsClick = false
     isManuallyCreateClick = false
     gManuallyCreateCounter = 0
+    gLevel.MINES = initMinesNumber()
     document.querySelector('.Safe-Click-div span').innerText = gSafeClickCounter
+}
+
+function initMinesNumber(){
+    if(gLevel.SIZE === 4) return 2
+    if(gLevel.SIZE === 8) return 14
+    if(gLevel.SIZE === 12) return 32
 }
 
 function undo(){
@@ -223,3 +230,43 @@ function DarkMode(elButton){
         elBody.classList.remove('Dark-Mode')
     }
 }
+
+// function initMegaHintVariable(location){
+//     if(!gMegaHintVariableOne) gMegaHintVariableOne = location
+//     else if(!gMegaHintVariableTwo){
+//         gMegaHintVariableTwo = location
+//         var startRowIdx = gMegaHintVariableTwo.i
+//         var endRowIdx = gMegaHintVariableOne.i
+//         var startColIdx = gMegaHintVariableTwo.j
+//         var endColIdx = gMegaHintVariableOne.j
+//         var rowIdxChange = -1
+//         var colIdxChange = -1
+//         if(gMegaHintVariableOne.i < gMegaHintVariableTwo.i){
+//             startRowIdx = gMegaHintVariableOne.i
+//             endRowIdx = gMegaHintVariableTwo.i
+//             rowIdxChange = 1
+//         }
+//         if(gMegaHintVariableOne.j < gMegaHintVariableTwo.j){
+//             startColIdx = gMegaHintVariableOne.j
+//             endColIdx = gMegaHintVariableTwo.j
+//             colIdxChange = 1
+//         }
+//         console.log('startRowIdx:', startRowIdx)
+//         console.log('endRowIdx:', endRowIdx)
+//         console.log('startColIdx:', startColIdx)
+//         console.log('endColIdx:', endColIdx)
+//         for (var i = startRowIdx; i !== endRowIdx; i += rowIdxChange) {
+//             for (var j = startColIdx; j !== endColIdx; j += colIdxChange){
+//                 const cell = gBoard[i][j]
+//                 const value = cell.isMine ? BOMB : colourfulMinesAroundCount(cell.minesAroundCount)
+//                 renderCell({i, j}, value)
+//             }
+//         }
+//         setTimeout(function(){
+//             renderBoard(gBoard)
+//             gIsMegaHint = false
+//             gMegaHintVariableOne = null
+//             gMegaHintVariableTwo = null
+//         }, 2000)
+//     }
+// }
