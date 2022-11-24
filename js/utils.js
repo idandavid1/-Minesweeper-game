@@ -60,6 +60,7 @@ function getCellCoord(strCellId){
 }
 
 function convertTime(second) {
+    if(second === -1) return 'dont have score'    
     var minute = Math.floor(second / 60)
     second = second % 60
     const strSecond = second < 10 ? '0' + second : second

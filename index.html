@@ -14,8 +14,16 @@
         <button onclick="levelMedium()">Medium</button>
         <button onclick="levelHard()">Hard</button>
     </div>
-    <div "game-time">
-        <h2>Time: <span>00:00</span></h2>
+    <h2 class="score">Best score: <span></span></h2>
+    <div>
+        <h2 class="time">Time: <span>00:00</span></h2>
+    </div>
+    <div>
+        <h2>hints: <span class="hints">
+            <img onclick="hints()" src="img/lampOff.png">
+            <img onclick="hints()" src="img/lampOff.png">
+            <img onclick="hints()" src="img/lampOff.png">
+        </span></h2>
     </div>
     <div>
         <h2>Lives left: <span class="lives-left">♥️♥️♥️</span></h2>
@@ -23,7 +31,13 @@
     <div class="smiley" onclick="initGame()"><img src="img/game.png"></div>
     <div class="board-game"></div>
     <button class="undo" onclick="undo()">UNDO</button>
+    <button class="Mega-Hint" onclick="MegaHint()">Mega-Hint</button>
+    <button class="Safe-Click" onclick="SafeClick()">Safe-Click</button>
+    <button class="Seven-Boom" onclick="SevenBoom()">7-Boom</button>
+    <button class="Exterminator" onclick="Exterminator()">Exterminator</button>
+    <button class="manually-create" onclick="manuallyCreate(this)">manually-create</button>
     <script src="js/utils.js"></script>
+    <script src="js/bonus.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

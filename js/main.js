@@ -6,10 +6,10 @@ const FLAG = '🚩'
 const gImgWin = '<img src="img/win.png"></img>'
 const gImgLost = '<img src="img/lost.png"></img>'
 const gImgGame = '<img src="img/game.png"></img>'
-var gUndoArr 
 var gLives
 var gBoard
 var gTimeInterval
+var isNeedFirstClick
 var gLevel = 
 {
     SIZE: 4,
@@ -28,6 +28,9 @@ function levelEasy(){
     gLevel.SIZE = 4
     gLevel.MINES = 2
     initGame()
+    gLevelLocalStorage = 'size' + gLevel.SIZE
+    saveLevel(gLevelLocalStorage)
+    BestScoreElementUpdate()
 }
 
 //managing
@@ -35,31 +38,38 @@ function levelMedium(){
     gLevel.SIZE = 8
     gLevel.MINES = 14
     initGame()
+    gLevelLocalStorage = 'size' + gLevel.SIZE
+    saveLevel(gLevelLocalStorage)
+    BestScoreElementUpdate()
 }
 
 //managing
 function levelHard(){
     gLevel.SIZE = 12
     gLevel.MINES = 32
+    console.log('gLevel.SIZE:', gLevel.SIZE)
     initGame()
+    gLevelLocalStorage = 'size' + gLevel.SIZE
+    saveLevel(gLevelLocalStorage)
+    BestScoreElementUpdate()
 }
 
 //create game
 function initGame(){
+    initBonus()
     document.querySelector('.smiley').innerHTML = gImgGame
-    document.querySelector('.lives-left').innerText = '♥️'.repeat(3)
     gGame.shownCount = 0
     gGame.markedCount = 0
     gGame.secsPassed = 0
-    gLives = 3
-    gUndoArr = [] 
     gBoard = buildBoard()
     if(gTimeInterval) clearInterval(gTimeInterval)
     renderBoard(gBoard)
+    isNeedFirstClick = true
 }
 
 //create game
 function buildBoard(){
+    console.log('gLevel.SIZE:',gLevel.SIZE )
     const board = []
     for(var i = 0; i < gLevel.SIZE; i++){
         board[i] = []
@@ -72,13 +82,13 @@ function buildBoard(){
 }
 
 //create game
-function createCell(){
+function createCell(minesAroundCount = 0, isShown = false, isMine = false, isMarked = true){
    const cell = 
    {
-        minesAroundCount: 0,
-        isShown: false,
-        isMine: false,
-        isMarked: true
+        minesAroundCount,
+        isShown,
+        isMine,
+        isMarked
         
     }
 
@@ -137,13 +147,15 @@ function renderBoard(board){
 
 function cellClicked(elCell, i, j){
     if(elCell.innerHTML === FLAG) return
-    if(gGame.shownCount !== 0){
+    if(gIsMegaHint) return initMegaHintVariable({i, j})
+    if(isManuallyCreateClick) return initManuallyCreate({i, j})
+    if(isHintsClick) return showHint({i, j})
+    if(!isNeedFirstClick){
         if(!gGame.isOn) return
         const cell = gBoard[i][j]
         if(cell.isShown) return
         if(cell.isMine){
             clickedBomb(elCell)
-            gUndoArr.push(createCopyBoard(gBoard))
             return
         } 
         if(!cell.minesAroundCount){
@@ -157,11 +169,12 @@ function cellClicked(elCell, i, j){
         str = colourfulMinesAroundCount(cell.minesAroundCount)
         elCell.innerHTML = str
         elCell.classList.replace('hide-board-cell', 'show-board-cell')
-        gUndoArr.push(gBoard)
+        gUndoArr.push(createCopyBoard(gBoard))
         if(checkGameOver()) gameOver()
     } else {
         firstCellClicked(i, j)
         gUndoArr.push(createCopyBoard(gBoard))
+        isNeedFirstClick = false
     } 
     
 }
@@ -173,7 +186,7 @@ function firstCellClicked(i, j){
     putRandomBomb()
     setMinesNegsCount(gBoard)
     renderBoard(gBoard)
-    // gUndoArr.push(createCopyBoard(gBoard))
+    gUndoArr.push(createCopyBoard(gBoard))
     if(!cell.minesAroundCount){
         expandShown(gBoard, i, j)
     } 
@@ -234,7 +247,6 @@ function clickedBomb(elCell){
         }, 700)
         return
     }
-
     for (var i = 0; i < gLevel.SIZE; i++) {
         for (var j = 0; j < gLevel.SIZE; j++) {
             const cell = gBoard[i][j]
@@ -246,6 +258,7 @@ function clickedBomb(elCell){
 }
 
 function cellMarked(elCell){
+    if(elCell.classList.contains('show-board-cell')) return
     if(elCell.innerHTML === FLAG){
         elCell.innerHTML = EMPTY
         gGame.markedCount--
@@ -257,11 +270,16 @@ function cellMarked(elCell){
 }
 
 function gameOver(){
+    clearInterval(gTimeInterval)
     elSmiley = document.querySelector('.smiley')
-    if(checkGameOver()) elSmiley.innerHTML = gImgWin 
+    if(checkGameOver()){
+        elSmiley.innerHTML = gImgWin 
+        console.log('gGame.secsPassed:', gGame.secsPassed)
+        updateScore(gGame.secsPassed - 1, gLevelLocalStorage)
+        BestScoreElementUpdate()
+    } 
     else elSmiley.innerHTML = gImgLost
     gGame.isOn = false
-    clearInterval(gTimeInterval)
 }
 
 function checkGameOver(){
@@ -282,31 +300,16 @@ function expandShown(board, rowIdx, colIdx){
         }
     }
 
-function renderCell(location, value) {
+function renderCell(location, value, isShow = true) {
     const cellSelector = '.' + getClassName(location) // cell-i-j
     const elCell = document.querySelector(cellSelector)
     elCell.innerHTML = value
-    elCell.classList.replace('hide-board-cell', 'show-board-cell')  
+    if(isShow) elCell.classList.replace('hide-board-cell', 'show-board-cell') 
+    else elCell.classList.replace('show-board-cell', 'show-board-cellhide-board-cell')
 }
 
 function displayGameTime(){ 
-    var elTime = document.querySelector('h2 span')
+    const elTime = document.querySelector('.time span')
     elTime.innerText =  convertTime(gGame.secsPassed)
     gGame.secsPassed++
-}
-
-function undo(){
-    if(!gUndoArr) return
-    var board = gUndoArr.pop()
-    console.log(board);
-    renderBoard(board)
-}
-
-function createCopyBoard(board){
-    const copyArr = []
-    for(var i = 0; i < gLevel.SIZE; i++){
-        copyArr[i] = board[i].slice(0, gLevel.SIZE)
-    }
-
-    return copyArr
 }

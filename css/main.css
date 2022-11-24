@@ -31,6 +31,7 @@ button{
     font-size: large;
     border-radius: 10px;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 img{
@@ -44,5 +45,29 @@ img{
 
 .undo{
     background-color: orange;
-    margin-top: 20px;
+}
+
+.Mega-Hint{
+    background-color:cornflowerblue
+}
+
+.Safe-Click{
+    background-color:rgb(8, 59, 154)
+}
+
+.Seven-Boom{
+    background-color:rgb(214, 231, 36)
+}
+
+.Exterminator{
+    background-color: greenyellow;
+}
+
+.manually-create{
+    background-color: blueviolet;
+}
+
+.hints img{
+    width: 30px;
+    height: 30px;
 }
