@@ -47,6 +47,7 @@ function initMinesNumber(){
 
 function undo(){
     if(!gUndoArr.length) return 
+    if (!gGame.isOn) return
     var board = gUndoArr.pop()
     gBoard = board
     initShowAndMarkCounter()

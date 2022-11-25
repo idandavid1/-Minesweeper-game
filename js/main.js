@@ -47,7 +47,6 @@ function levelMedium() {
 function levelHard() {
     gLevel.SIZE = 12
     gLevel.MINES = 32
-    console.log('gLevel.SIZE:', gLevel.SIZE)
     initGame()
     gLevelLocalStorage = 'size' + gLevel.SIZE
     saveLevel(gLevelLocalStorage)
@@ -161,6 +160,7 @@ function cellClicked(elCell, i, j) {
         if (!cell.minesAroundCount) {
             expandShown(gBoard, i, j)
             gUndoArr.push(createCopyBoard(gBoard))
+            if (checkGameOver()) gameOver()
             return
         }
         gGame.shownCount++
@@ -258,6 +258,7 @@ function clickedBomb(elCell) {
 }
 
 function cellMarked(elCell) {
+    if (isManuallyCreateClick) return
     if (elCell.classList.contains('show-board-cell')) return
     const location = getCellCoord(elCell.classList[0])
     const cell = gBoard[location.i][location.j]
