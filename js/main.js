@@ -68,7 +68,7 @@ function initGame() {
 
 //create game
 function buildBoard() {
-    console.log('gLevel.SIZE:', gLevel.SIZE)
+    // console.log('gLevel.SIZE:', gLevel.SIZE)
     const board = []
     for (var i = 0; i < gLevel.SIZE; i++) {
         board[i] = []
@@ -280,7 +280,7 @@ function gameOver() {
     elSmiley = document.querySelector('.smiley')
     if (checkGameOver()) {
         elSmiley.innerHTML = gImgWin
-        console.log('gGame.secsPassed:', gGame.secsPassed)
+        // console.log('gGame.secsPassed:', gGame.secsPassed)
         updateScore(gGame.secsPassed - 1, gLevelLocalStorage)
         BestScoreElementUpdate()
     }
@@ -289,8 +289,8 @@ function gameOver() {
 }
 
 function checkGameOver() {
-    console.log('gGame.shownCount:', gGame.shownCount)
-    console.log('gLevel.MINES:', gLevel.MINES)
+    // console.log('gGame.shownCount:', gGame.shownCount)
+    // console.log('gLevel.MINES:', gLevel.MINES)
     return gGame.shownCount === (gLevel.SIZE ** 2) - gLevel.MINES && gGame.markedCount === gLevel.MINES
 }
 

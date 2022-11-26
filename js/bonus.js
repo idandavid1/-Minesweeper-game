@@ -35,7 +35,7 @@ function initBonus(){
     isManuallyCreateClick = false
     gManuallyCreateCounter = 0
     gLevel.MINES = initMinesNumber()
-    document.querySelector('.Safe-Click-div span').innerText = gSafeClickCounter
+    document.querySelector('.Safe-Click-span span').innerText = gSafeClickCounter
     document.querySelector('.hints').innerHTML = gImgLampOff.repeat(gHintsCounter)
 }
 
@@ -118,7 +118,7 @@ function SafeClick(){
         renderCell(cell, EMPTY, false)
     }, 1000)
     gSafeClickCounter--
-    document.querySelector('.Safe-Click-div span').innerText = gSafeClickCounter
+    document.querySelector('.Safe-Click-span span').innerText = gSafeClickCounter
 }
 
 function SevenBoom(){

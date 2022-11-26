@@ -80,9 +80,12 @@ img {
     background-color: blueviolet;
 }
 
-.Safe-Click-div {
+/* .Safe-Click-div {
     padding-right: 320px;
-}
+} */
+/* .Safe-Click-box{
+    display: inline;
+} */
 
 .hints img {
     width: 30px;
