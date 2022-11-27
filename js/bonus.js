@@ -17,6 +17,7 @@ var gHintsCounter
 var isHintsClick
 var gManuallyCreateCounter
 var isManuallyCreateClick
+var isFirstUndo
 
 function initBonus(){
     document.querySelector('.lives-left').innerText = '♥️'.repeat(3)
@@ -29,14 +30,15 @@ function initBonus(){
     gIsSevenBoom = false
     gLevelLocalStorage = 'size' + gLevel.SIZE
     isExterminatorClick = false
-    BestScoreElementUpdate()
+    bestScoreElementUpdate()
     gHintsCounter = 3
     isHintsClick = false
     isManuallyCreateClick = false
     gManuallyCreateCounter = 0
     gLevel.MINES = initMinesNumber()
-    document.querySelector('.Safe-Click-span span').innerText = gSafeClickCounter
+    document.querySelector('.safe-click-span span').innerText = gSafeClickCounter
     document.querySelector('.hints').innerHTML = gImgLampOff.repeat(gHintsCounter)
+    isFirstUndo = false
 }
 
 function initMinesNumber(){
@@ -48,6 +50,10 @@ function initMinesNumber(){
 function undo(){
     if(!gUndoArr.length) return 
     if (!gGame.isOn) return
+    // if(isFirstUndo) {
+    //     gUndoArr.pop()
+    //     isFirstUndo = false
+    // }
     var board = gUndoArr.pop()
     gBoard = board
     initShowAndMarkCounter()
@@ -79,7 +85,7 @@ function createCopyBoard(board){
     return copyArr
 }
 
-function MegaHint(){
+function megaHint(){
     gIsMegaHint = true
 }
 
@@ -90,7 +96,7 @@ function initMegaHintVariable(location){
         for (var i = gMegaHintVariableOne.i; i <= gMegaHintVariableTwo.i; i++) {
             for (var j = gMegaHintVariableOne.j; j <= gMegaHintVariableTwo.j; j++){
                 const cell = gBoard[i][j]
-                const value = cell.isMine ? MINES : colourfulMinesAroundCount(cell.minesAroundCount)
+                const value = cell.isMine ? MINE : colourfulMinesAroundCount(cell.minesAroundCount)
                 renderCell({i, j}, value)
             }
         }
@@ -103,7 +109,7 @@ function initMegaHintVariable(location){
     }
 }
 
-function SafeClick(){
+function safeClick(){
     if(!gSafeClickCounter) return
     const cells = []
     for (var i = 0; i < gLevel.SIZE; i++) {
@@ -118,10 +124,10 @@ function SafeClick(){
         renderCell(cell, EMPTY, false)
     }, 1000)
     gSafeClickCounter--
-    document.querySelector('.Safe-Click-span span').innerText = gSafeClickCounter
+    document.querySelector('.safe-click-span span').innerText = gSafeClickCounter
 }
 
-function SevenBoom(){
+function sevenBoom(){
     initGame()
     putMinesInSevenBoomOrder(gBoard)
     setMinesNegsCount(gBoard)
@@ -158,13 +164,13 @@ function updateScore(newScore, gLevelLocalStorage){
     }
 }
 
-function BestScoreElementUpdate(){
+function bestScoreElementUpdate(){
     const score = localStorage.getItem(gLevelLocalStorage)
     const elScore = document.querySelector('.score span')
     elScore.innerText = convertTime(score)
 }
 
-function Exterminator(){
+function exterminator(){
     if(isExterminatorClick) return 
     const mineLocations = []
     for (var i = 0; i < gLevel.SIZE; i++) {
@@ -199,7 +205,7 @@ function showHint(location){
             for(var j = colIdx - 1; j <= colIdx + 1; j++){
                 if(j < 0 || j >= gBoard[i].length) continue
                 const cell = gBoard[i][j]
-                const value = cell.isMine ? MINES : colourfulMinesAroundCount(cell.minesAroundCount)
+                const value = cell.isMine ? MINE : colourfulMinesAroundCount(cell.minesAroundCount)
                 renderCell({i, j}, value)
             }
         }
@@ -230,19 +236,26 @@ function manuallyCreate(elButton){
 }
 
 function initManuallyCreate(location){
-    renderCell(location, MINES)
-    gBoard[location.i][location.j].isMine = true
-    gManuallyCreateCounter++
+    if(gBoard[location.i][location.j].isMine){
+        gBoard[location.i][location.j].isMine = false
+        gManuallyCreateCounter--
+        renderCell(location, EMPTY, false)
+    } else {
+        gBoard[location.i][location.j].isMine = true
+        gManuallyCreateCounter++
+        renderCell(location, MINE)
+    }
+    
 }
 
-function DarkMode(elButton){
+function darkMode(elButton){
     const elBody = document.querySelector('body')
-    if(elButton.innerText === 'Dark-Mode'){
-        elButton.innerText = 'Out-Dark-Mode'
-        elBody.classList.add('Dark-Mode')
+    if(elButton.innerText === 'dark-mode'){
+        elButton.innerText = 'out-dark-mode'
+        elBody.classList.add('dark-mode')
     } else {
-        elButton.innerText = 'Dark-Mode'
-        elBody.classList.remove('Dark-Mode')
+        elButton.innerText = 'dark-mode'
+        elBody.classList.remove('dark-mode')
     }
 }
 

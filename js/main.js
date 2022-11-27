@@ -1,6 +1,6 @@
 'use script'
 
-const MINES = '💣'
+const MINE = '💣'
 const EMPTY = ''
 const FLAG = '🚩'
 const gImgWin = '<img src="img/win.png"></img>'
@@ -30,7 +30,7 @@ function levelEasy() {
     initGame()
     gLevelLocalStorage = 'size' + gLevel.SIZE
     saveLevel(gLevelLocalStorage)
-    BestScoreElementUpdate()
+    bestScoreElementUpdate()
 }
 
 //managing
@@ -40,7 +40,7 @@ function levelMedium() {
     initGame()
     gLevelLocalStorage = 'size' + gLevel.SIZE
     saveLevel(gLevelLocalStorage)
-    BestScoreElementUpdate()
+    bestScoreElementUpdate()
 }
 
 //managing
@@ -50,7 +50,7 @@ function levelHard() {
     initGame()
     gLevelLocalStorage = 'size' + gLevel.SIZE
     saveLevel(gLevelLocalStorage)
-    BestScoreElementUpdate()
+    bestScoreElementUpdate()
 }
 
 //create game
@@ -127,7 +127,7 @@ function renderBoard(board) {
             var className = getClassName({ i, j })
             var str
             if (cell.isShown) {
-                if (cell.isMine) str = MINES
+                if (cell.isMine) str = MINE
                 else str = colourfulMinesAroundCount(+cell.minesAroundCount)
                 className += ' show-board-cell'
             } else {
@@ -150,7 +150,8 @@ function cellClicked(elCell, i, j) {
     if (isManuallyCreateClick) return initManuallyCreate({ i, j })
     if (isHintsClick) return showHint({ i, j })
     if (!isNeedFirstClick) {
-        if (!gGame.isOn) return
+        if (!gGame.isOn) 
+        isFirstUndo = true
         const cell = gBoard[i][j]
         if (cell.isShown) return
         if (cell.isMine) {
@@ -240,7 +241,7 @@ function clickedBomb(elCell) {
         const heartStr = '♥️'.repeat(gLives)
         elLivesLeft.innerText = heartStr
         elCell.classList.replace('hide-board-cell', 'show-board-cell')
-        elCell.innerText = MINES
+        elCell.innerText = MINE
         setTimeout(function () {
             elCell.classList.replace('show-board-cell', 'hide-board-cell')
             elCell.innerText = EMPTY
@@ -250,7 +251,7 @@ function clickedBomb(elCell) {
     for (var i = 0; i < gLevel.SIZE; i++) {
         for (var j = 0; j < gLevel.SIZE; j++) {
             const cell = gBoard[i][j]
-            if (cell.isMine) renderCell({ i, j }, MINES)
+            if (cell.isMine) renderCell({ i, j }, MINE)
         }
     }
     elLivesLeft.innerText = ''
@@ -282,7 +283,7 @@ function gameOver() {
         elSmiley.innerHTML = gImgWin
         // console.log('gGame.secsPassed:', gGame.secsPassed)
         updateScore(gGame.secsPassed - 1, gLevelLocalStorage)
-        BestScoreElementUpdate()
+        bestScoreElementUpdate()
     }
     else elSmiley.innerHTML = gImgLost
     gGame.isOn = false
