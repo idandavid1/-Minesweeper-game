@@ -92,7 +92,6 @@ function createCell(minesAroundCount = 0, isShown = false, isMine = false, isMar
     }
 
     return cell
-
 }
 
 function setMinesNegsCount(board) {
@@ -150,7 +149,8 @@ function cellClicked(elCell, i, j) {
     if (isManuallyCreateClick) return initManuallyCreate({ i, j })
     if (isHintsClick) return showHint({ i, j })
     if (!isNeedFirstClick) {
-        if (!gGame.isOn) 
+        if (!gGame.isOn) return
+        if(!isFirstUndo) gUndoArr.push(createCopyBoard(gBoard))
         isFirstUndo = true
         const cell = gBoard[i][j]
         if (cell.isShown) return
@@ -187,7 +187,10 @@ function firstCellClicked(i, j) {
     putRandomMines()
     setMinesNegsCount(gBoard)
     renderBoard(gBoard)
+    // undo
+    cell.isShown = false
     gUndoArr.push(createCopyBoard(gBoard))
+    cell.isShown = true
     if (!cell.minesAroundCount) {
         expandShown(gBoard, i, j)
     }
@@ -259,6 +262,7 @@ function clickedBomb(elCell) {
 }
 
 function cellMarked(elCell) {
+    if (!gGame.isOn) return
     if (isManuallyCreateClick) return
     if (elCell.classList.contains('show-board-cell')) return
     const location = getCellCoord(elCell.classList[0])

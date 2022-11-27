@@ -50,14 +50,21 @@ function initMinesNumber(){
 function undo(){
     if(!gUndoArr.length) return 
     if (!gGame.isOn) return
-    // if(isFirstUndo) {
-    //     gUndoArr.pop()
-    //     isFirstUndo = false
-    // }
-    var board = gUndoArr.pop()
-    gBoard = board
+    if(gUndoArr.length === 1){
+        gBoard = gUndoArr[0]
+        initShowAndMarkCounter()
+        renderBoard(gBoard)
+        return
+    }
+    if(isFirstUndo) {
+        console.log('first:')
+        gUndoArr.pop()
+        isFirstUndo = false
+    }
+    // console.log('gBoard:', gBoard)
+    gBoard = gUndoArr.pop()
     initShowAndMarkCounter()
-    renderBoard(board)
+    renderBoard(gBoard)
 }
 
 function initShowAndMarkCounter(){
